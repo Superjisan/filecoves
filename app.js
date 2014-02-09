@@ -40,8 +40,6 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.post('/upload', routes.upload);
-app.get('/account', ensureAuthenticated, routes.account);
-app.get('/login', routes.login);
 
 //FB
 
@@ -74,7 +72,7 @@ app.get('/auth/facebook',
 	passport.authenticate('facebook'));
 app.get('/auth/facebook/callback',
 	passport.authenticate('facebook', { successRedirect: '/',
-	failureRedirect: '/login' }));
+	failureRedirect: '/' }));
 
 app.get('/logout', function(req, res){
 	req.logout();
@@ -83,7 +81,7 @@ app.get('/logout', function(req, res){
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login');
+  res.redirect('/');
 }
 
 //

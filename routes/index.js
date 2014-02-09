@@ -16,9 +16,9 @@ exports.account = function(req, res){
   res.render('account', { user: req.user });
 };
 
-exports.login = function(req, res){
-  res.render('login', { user: req.user });
-};
+// exports.login = function(req, res){
+//   res.render('login', { user: req.user });
+// };
 
 exports.upload = function(req, res){
 
@@ -28,8 +28,18 @@ exports.upload = function(req, res){
 		var fileArray = req.files.file;
 	}
 
+	var location = req.body.location;
+	var date = req.body.date;
+	var fileNumber = 0;
+
 	fileArray.forEach(function(file){
 		var filePath = file.path;
+
+		fileNumber++;
+		var rename = file.name.split(".");
+		rename[0] = location + "_" + date + "_" + fileNumber.toString();
+		file.name = rename.join(".");
+
 		var targetPath = path.resolve('uploads/', file.name);
 
 		fs.rename(filePath, targetPath, function(err) {
