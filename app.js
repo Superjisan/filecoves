@@ -11,6 +11,7 @@ var path = require('path');
 var swig = require('swig');
 var passport = require('passport'),
 FacebookStrategy = require('passport-facebook').Strategy;
+var graph = require('fbgraph');
 
 var app = express();
 app.engine('html', swig.renderFile);
@@ -49,7 +50,6 @@ var FACEBOOK_APP_SECRET = "3689affe76888332a37ee31e8d7e8ffa";
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
-
 passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
@@ -57,11 +57,12 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new FacebookStrategy({
 	clientID: FACEBOOK_APP_ID,
 	clientSecret: FACEBOOK_APP_SECRET,
-	callbackURL: "http://localhost:3000/auth/facebook/callback"
+	callbackURL: "http://localhost:3000/auth/facebook/callback",
+	profileFields: ['id']
 	},
 	function(accessToken, refreshToken, profile, done) {
 		process.nextTick(function () {
-		console.log("profile:", profile);
+		console.log("profile:", profile.id);
 		console.log("ACCESS", accessToken);
 		console.log("REFRESH:", refreshToken),
 		done(null, profile);
@@ -84,7 +85,26 @@ function ensureAuthenticated(req, res, next) {
   res.redirect('/');
 }
 
-//
+// var secretAccess = "CAADjFMTgIA8BAJJWgosasCNOZCyfnU6ZBIwlenTaj15mVCR9wPJZCcRKxPUxO8NLAahYfcx7LDn2Xs6MPK3MeBbhn5uaK3fCEezPXRn6fZAOShR5mv5XdQUfzh88GDr9AGDII6YPIXXLIXpTvcm9vTj2emRwuuWx7pXjf3q109OIxhiZCZAZBka";
+
+// graph.setAccessToken(secretAccess);
+
+
+// graph.get('6026602' + '/friends', function(err, data) {
+// 	// console.log(res);
+// 	var friendlist = [];
+// 	for (var key in data) {
+// 		for (var i = 0; i < data[key].length; i++) {
+// 			// console.log(data[key][i].id);
+// 			friendlist.push(data[key][i].id);
+// 		}
+// 	}
+// 	console.log(friendlist);
+// });
+
+
+
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

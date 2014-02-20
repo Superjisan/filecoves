@@ -7,18 +7,27 @@ var fs = require('fs');
 var path = require('path');
 var client = require('../client');
 var showError = require('../client');
+var graph = require('fbgraph');
 
 exports.index = function(req, res){
-  res.render('index', { user: req.user });
+	var secretAccess = "CAADjFMTgIA8BAJJWgosasCNOZCyfnU6ZBIwlenTaj15mVCR9wPJZCcRKxPUxO8NLAahYfcx7LDn2Xs6MPK3MeBbhn5uaK3fCEezPXRn6fZAOShR5mv5XdQUfzh88GDr9AGDII6YPIXXLIXpTvcm9vTj2emRwuuWx7pXjf3q109OIxhiZCZAZBka";
+
+	graph.setAccessToken(secretAccess);
+
+	var friendlist = [];
+	graph.get('6026602' + '/friends', function(err, data) {
+		for (var key in data) {
+			for (var i = 0; i < data[key].length; i++) {
+				friendlist.push(data[key][i].id);
+			}
+		}
+		res.render('index', { user: req.user, friendlist: friendlist });
+	});
 };
 
 exports.account = function(req, res){
   res.render('account', { user: req.user });
 };
-
-// exports.login = function(req, res){
-//   res.render('login', { user: req.user });
-// };
 
 exports.upload = function(req, res){
 
