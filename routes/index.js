@@ -25,9 +25,9 @@ exports.index = function(req, res){
 	});
 };
 
-exports.account = function(req, res){
-  res.render('account', { user: req.user });
-};
+// exports.account = function(req, res){
+//   res.render('account', { user: req.user });
+// };
 
 exports.upload = function(req, res){
 

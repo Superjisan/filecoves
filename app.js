@@ -11,7 +11,6 @@ var path = require('path');
 var swig = require('swig');
 var passport = require('passport'),
 FacebookStrategy = require('passport-facebook').Strategy;
-var graph = require('fbgraph');
 
 var app = express();
 app.engine('html', swig.renderFile);
@@ -57,12 +56,11 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new FacebookStrategy({
 	clientID: FACEBOOK_APP_ID,
 	clientSecret: FACEBOOK_APP_SECRET,
-	callbackURL: "http://localhost:3000/auth/facebook/callback",
-	profileFields: ['id']
+	callbackURL: "http://localhost:3000/auth/facebook/callback"
 	},
 	function(accessToken, refreshToken, profile, done) {
 		process.nextTick(function () {
-		console.log("profile:", profile.id);
+		console.log("profile:", profile);
 		console.log("ACCESS", accessToken);
 		console.log("REFRESH:", refreshToken),
 		done(null, profile);

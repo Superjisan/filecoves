@@ -25,8 +25,8 @@
 	{% endfor %}
 
 	{% if (!isFriend) %}
-		<h1>Error</h1>
-		<p>Oh no! You aren't a friend.</p>
+		<h1>Validation Error</h1>
+		<p>Oh no! You aren't friends with {{ user.displayName }}.</p>
 
 	{% else %}
 		<h1>File Upload</h1>
