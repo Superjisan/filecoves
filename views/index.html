@@ -6,17 +6,14 @@
 
 {% block content %}
 
-<!-- Sign In Page -->
-
 {% if (!user) %}
 		<h1>Sign In Using Facebook</h1>
 		<p>Your Facebook information will only be used to ensure you are an approved photographer/videographer.</p>
-		<p><a href="/auth/facebook" class="button">Sign In Using Facebook</a></p>
-
-<!-- Upload Page -->
+		<p><a href="/auth/facebook" class="button btn-block">Sign In Using Facebook</a></p>
 
 {% else %}
 
+<!-- CHANGE BACK TO FALSE IF YOU WANT VALIDATION TO WORK!! -->
 	{% set isFriend = false %}
 	{% for friend in friendlist %}
 		{% if friend === user.id %}
@@ -25,8 +22,15 @@
 	{% endfor %}
 
 	{% if (!isFriend) %}
-		<h1>Validation Error</h1>
-		<p>Oh no! You aren't friends with {{ user.displayName }}.</p>
+		{% if ownerId === user.id %}
+			<h1>Admin</h1>
+			<p>You are {{ user.displayName }}.</p>
+<!-- 			<p><a class="button btn-block" href="/dropbox_login">Authorize Dropbox</a></p> -->
+
+		{% else %}
+			<h1>Validation Error</h1>
+			<p>Oh no! You aren't friends with {{ user.displayName }}.</p>
+		{% endif %}
 
 	{% else %}
 		<h1>File Upload</h1>
@@ -100,16 +104,32 @@
 
 			<div class="form-group">
 				<label for="files">Files</label>
-				<input type="file" id="files" name="file" multiple="">
+				<input type="file" id="files" name="file" multiple="" onchange="listFiles()">
 			</div>
 
+			<ul id="fileList">
+			</ul>
+
 			<div class="form-group">
-				<button type="submit" class="btn btn-primary">Submit</button>
-				<button type="reset" class="btn btn-primary">Clear</button>
+				<button type="submit" class="btn button submitbutton">Submit</button>
+				<button type="reset" class="btn button submitbutton">Clear</button>
 			</div>
 		</form>
-		<p><br><br><a href="/logout">Log Out</a></p>
 		{% endif %}
 {% endif %}
 
+{% endblock %}
+
+{% block logout %}
+	{% if user %}
+		<a href="/logout">Log Out</a>
+		<script>
+			var listFiles = function() {
+				var files = document.getElementById("files").files;
+				for (var i = 0; i < files.length; i++) {
+					$("#fileList").append("<li>" + files[i].name + "</li>");
+				}
+			};
+		</script>
+	{% endif %}
 {% endblock %}

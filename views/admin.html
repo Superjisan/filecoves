@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block site title %}
+	Wish Upon A Wedding
+{% endblock %}
+
+{% block content %}
+
+<h1>Admin</h1>
+{% if isAuthenticated %}
+	<p>Dropbox is authorized</p>
+	<p>{{ token }}</p>
+{% else %}
+	<p><a class="button btn-block" href="/dropbox_login">Authorize Dropbox</a></p>
+{% endif %}
+
+{% endblock %}
+
+{% block logout %}
+	{% if user %}
+		<a href="/logout">Log Out</a>
+	{% endif %}
+{% endblock %}

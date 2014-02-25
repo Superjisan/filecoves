@@ -7,6 +7,8 @@
 		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
 		<link href="/stylesheets/style.css" rel="stylesheet">
 
+		<script src="//cdnjs.cloudflare.com/ajax/libs/dropbox.js/0.10.2/dropbox.min.js"></script>
+
 	</head>
 	<body>
 
@@ -14,6 +16,9 @@
 
 			<div class="wrapper">
 				{% block content %}{% endblock %}
+			</div>
+			<div class="logout">
+				{% block logout %}{% endblock %}
 			</div>
 
 		</div><!-- /.container -->

@@ -15,19 +15,17 @@ exports.index = function(req, res){
 	graph.setAccessToken(secretAccess);
 
 	var friendlist = [];
-	graph.get('6026602' + '/friends', function(err, data) {
+	var ownerId = '6026602';
+	graph.get(ownerId + '/friends', function(err, data) {
 		for (var key in data) {
 			for (var i = 0; i < data[key].length; i++) {
 				friendlist.push(data[key][i].id);
 			}
 		}
-		res.render('index', { user: req.user, friendlist: friendlist });
+		res.render('index', { user: req.user, friendlist: friendlist, ownerId: ownerId });
 	});
-};
 
-// exports.account = function(req, res){
-//   res.render('account', { user: req.user });
-// };
+};
 
 exports.upload = function(req, res){
 
