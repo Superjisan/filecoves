@@ -9,7 +9,6 @@ var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 var swig = require('swig');
-require('./filters')(swig);
 var passport = require('passport'),
 FacebookStrategy = require('passport-facebook').Strategy;
 

@@ -24,12 +24,11 @@
 	{% if (!isFriend) %}
 		{% if ownerId === user.id %}
 			<h1>Admin</h1>
-			<p>You are {{ user.displayName }}.</p>
-<!-- 			<p><a class="button btn-block" href="/dropbox_login">Authorize Dropbox</a></p> -->
+			<p>Dropbox account: {{ dropboxName }}</p>
 
 		{% else %}
 			<h1>Validation Error</h1>
-			<p>Oh no! You aren't friends with {{ user.displayName }}.</p>
+			<p>Oh no! You aren't friends with {{ user.displayName }}. Better send a friend request.</p>
 		{% endif %}
 
 	{% else %}

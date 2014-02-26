@@ -10,6 +10,8 @@ var showError = require('../client');
 var graph = require('fbgraph');
 
 exports.index = function(req, res){
+
+	// get facebook friends
 	var secretAccess = "CAADjFMTgIA8BAJJWgosasCNOZCyfnU6ZBIwlenTaj15mVCR9wPJZCcRKxPUxO8NLAahYfcx7LDn2Xs6MPK3MeBbhn5uaK3fCEezPXRn6fZAOShR5mv5XdQUfzh88GDr9AGDII6YPIXXLIXpTvcm9vTj2emRwuuWx7pXjf3q109OIxhiZCZAZBka";
 
 	graph.setAccessToken(secretAccess);
@@ -22,7 +24,14 @@ exports.index = function(req, res){
 				friendlist.push(data[key][i].id);
 			}
 		}
-		res.render('index', { user: req.user, friendlist: friendlist, ownerId: ownerId });
+	});
+
+	// get dropbox user info
+	client.getAccountInfo(function(error, accountInfo) {
+		if (error) {
+			return showError(error);
+		}
+		res.render('index', { user: req.user, friendlist: friendlist, ownerId: ownerId, dropboxName: accountInfo.name });
 	});
 
 };
@@ -59,6 +68,7 @@ exports.upload = function(req, res){
 			return showError;
 		}
 
+			client.dropboxUid()
 			client.writeFile(targetPath, data, function(error, stat) {
 				if (error) {
 					return showError(error);
