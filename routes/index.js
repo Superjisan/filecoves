@@ -18,6 +18,7 @@ exports.index = function(req, res){
 
 	var friendlist = [];
 	var ownerId = '6026602';
+	var ownerName = 'Lauren Ashpole';
 	graph.get(ownerId + '/friends', function(err, data) {
 		for (var key in data) {
 			for (var i = 0; i < data[key].length; i++) {
@@ -31,7 +32,7 @@ exports.index = function(req, res){
 		if (error) {
 			return showError(error);
 		}
-		res.render('index', { user: req.user, friendlist: friendlist, ownerId: ownerId, dropboxName: accountInfo.name });
+		res.render('index', { user: req.user, friendlist: friendlist, ownerId: ownerId, ownerName: ownerName, dropboxName: accountInfo.name });
 	});
 
 };
@@ -47,6 +48,7 @@ exports.upload = function(req, res){
 	var location = req.body.location;
 	var date = req.body.date;
 	var fileNumber = 0;
+	var newfolder = location + "_" + date;
 
 	fileArray.forEach(function(file){
 		var filePath = file.path;
@@ -56,19 +58,18 @@ exports.upload = function(req, res){
 		rename[0] = location + "_" + date + "_" + fileNumber.toString();
 		file.name = rename.join(".");
 
-		var targetPath = path.resolve('uploads/', file.name);
+		var targetPath = path.resolve('/' + newfolder + '/', file.name);
 
-		fs.rename(filePath, targetPath, function(err) {
-			if (err) throw err;
-			console.log("Upload completed!");
-		});
+		// fs.rename(filePath, targetPath, function(err) {
+		// 	if (err) throw err;
+		// 	console.log("Upload completed!");
+		// });
 
-		fs.readFile(targetPath, function(error, data) {
+		fs.readFile(filePath, function(error, data) {
 			if (error) {
 			return showError;
 		}
 
-			client.dropboxUid()
 			client.writeFile(targetPath, data, function(error, stat) {
 				if (error) {
 					return showError(error);
@@ -78,4 +79,13 @@ exports.upload = function(req, res){
 	});
 
 res.redirect('/');
+};
+
+exports.search = function(req, res) {
+	var search_term = req.body.search;
+
+	client.search('/', search_term, function(error, results) {
+			res.render('searchresults', { search_term: search_term, results: results });
+			console.log(results);
+	});
 };

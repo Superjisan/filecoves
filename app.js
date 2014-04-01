@@ -40,7 +40,7 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.post('/upload', routes.upload);
-// app.get('/dropbox_login', routes.dropbox_login);
+app.post('/search', routes.search);
 
 // facebook authentication
 var FACEBOOK_APP_ID = "249678341873679";
@@ -60,6 +60,7 @@ passport.use(new FacebookStrategy({
 	},
 	function(accessToken, refreshToken, profile, done) {
 		process.nextTick(function () {
+			console.log(profile);
 		done(null, profile);
 	});
 }));

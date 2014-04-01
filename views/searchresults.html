@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block site title %}
+	Wish Upon A Wedding
+{% endblock %}
+
+{% block content %}
+	<h1>Search Results</h1>
+	<p>Results for {{ search_term }}:</p>
+	<ul>
+	{% for result in results %}
+		<li>{{ result.name }}</li>
+	{% endfor %}
+	</ul>
+{% endblock %}
