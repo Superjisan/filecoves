@@ -12,7 +12,7 @@ var graph = require('fbgraph');
 exports.index = function(req, res){
 
 	// get facebook friends
-	var secretAccess = "CAADjFMTgIA8BAJJWgosasCNOZCyfnU6ZBIwlenTaj15mVCR9wPJZCcRKxPUxO8NLAahYfcx7LDn2Xs6MPK3MeBbhn5uaK3fCEezPXRn6fZAOShR5mv5XdQUfzh88GDr9AGDII6YPIXXLIXpTvcm9vTj2emRwuuWx7pXjf3q109OIxhiZCZAZBka";
+	var secretAccess = "CAACEdEose0cBAGjvGESqzhlFfUmI021X6yEDh8mJRCuXLlfqZAHRAlXfLspxu6OSAwmbDC7dRasbs2mPxkKpmcLpCdFyd9ObNaDKWkARPwdHGxY0wF30F2Dh0t1ONH572ZC9RTH0ZC7vJFN4dvz0J2ZAU2DetnWVU3KWYHp41ZA8p5J07JigwZAYbrvfMmf9TVIYfOZCgP1HwZDZD";
 
 	graph.setAccessToken(secretAccess);
 
