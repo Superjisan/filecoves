@@ -14,7 +14,7 @@
 	{% else %}
 
 	<!-- CHANGE BACK TO FALSE IF YOU WANT VALIDATION TO WORK!! -->
-		{% set isFriend = true %}
+		{% set isFriend = false %}
 		{% for friend in friendlist %}
 			{% if friend === user.id %}
 				{% set isFriend = true %}
