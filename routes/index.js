@@ -12,7 +12,7 @@ var graph = require('fbgraph');
 exports.index = function(req, res){
 
 	// get facebook friends
-	var secretAccess = "CAACEdEose0cBAGjvGESqzhlFfUmI021X6yEDh8mJRCuXLlfqZAHRAlXfLspxu6OSAwmbDC7dRasbs2mPxkKpmcLpCdFyd9ObNaDKWkARPwdHGxY0wF30F2Dh0t1ONH572ZC9RTH0ZC7vJFN4dvz0J2ZAU2DetnWVU3KWYHp41ZA8p5J07JigwZAYbrvfMmf9TVIYfOZCgP1HwZDZD";
+	var secretAccess = "CAACEdEose0cBAJnqSmJE1Ufb2l9ZCXsBKhgmnB2PpxVgRuivDaHkyk84sWkEbUC7xxFXsRcIlZBEX7ECFV1wY0UyZAeg5V039Lh2Qfr8cgkRZAN7N2wgbgwXtLckWNlHG8SsmBA1ZCl2EwMgdZBGCjLmV8PAhlmyYtzt0w9drsRMYoJLguKWCd1kKY3X2Ii4WJ2ZBm3Fs9urAZDZD";
 
 	graph.setAccessToken(secretAccess);
 
@@ -60,10 +60,10 @@ exports.upload = function(req, res){
 
 		var targetPath = path.resolve('/' + newfolder + '/', file.name);
 
-		// fs.rename(filePath, targetPath, function(err) {
-		// 	if (err) throw err;
-		// 	console.log("Upload completed!");
-		// });
+		fs.rename(filePath, targetPath, function(err) {
+			// if (err) throw err;
+			console.log("Upload completed!");
+		});
 
 		fs.readFile(filePath, function(error, data) {
 			if (error) {
@@ -71,9 +71,16 @@ exports.upload = function(req, res){
 		}
 
 			client.writeFile(targetPath, data, function(error, stat) {
-				if (error) {
-					return showError(error);
-				}
+								if (error) {
+									return showError(error);
+								}
+					client.getAccountInfo(function(error, accountInfo) {
+						if (error) {
+							return showError(error);
+						}
+						console.log('Uploaded to:  '+ accountInfo.name+"'s filepath: " + targetPath)
+					});
+
 			});
 		});
 	});
