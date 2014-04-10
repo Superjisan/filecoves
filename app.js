@@ -18,7 +18,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var app = express();
 // Bootstrap models
-var models_path = __dirname + '/app/models';
+var models_path = __dirname + '/models';
 var walk = function(path) {
     fs.readdirSync(path).forEach(function(file) {
         var newPath = path + '/' + file;

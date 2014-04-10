@@ -6,7 +6,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 var Schema = mongoose.Schema;
 
 var FiltersSchema = new Schema ({
-  options: [],
+  filter_options: [],
   select_value: String,
   input_values : String,
 })
@@ -30,8 +30,8 @@ var UsersSchema = new Schema({
   dropbox : {},
   dropbox_id : String,
   dropbox_accesstoken : String,
-  filter_categories : [filterSchema],
-  urls_generated : [urlSchema],
+  filter_categories : [FiltersSchema],
+  urls_generated : [urlsSchema],
   email : String,
   file_history : [FilesSchema],
   roles : []
