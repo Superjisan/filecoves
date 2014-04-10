@@ -2,7 +2,7 @@
 /**
  * Module dependencies.
  */
-
+var fs = require('fs');
 var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
@@ -12,7 +12,27 @@ var swig = require('swig');
 var passport = require('passport'),
 FacebookStrategy = require('passport-facebook').Strategy;
 
+// Load configurations
+// Set the node environment variable if not set before
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
 var app = express();
+// Bootstrap models
+var models_path = __dirname + '/app/models';
+var walk = function(path) {
+    fs.readdirSync(path).forEach(function(file) {
+        var newPath = path + '/' + file;
+        var stat = fs.statSync(newPath);
+        if (stat.isFile()) {
+            if (/(.*)\.(js$|coffee$)/.test(file)) {
+                require(newPath);
+            }
+        } else if (stat.isDirectory()) {
+            walk(newPath);
+        }
+    });
+};
+walk(models_path);
 app.engine('html', swig.renderFile);
 
 // all environments
