@@ -1,9 +1,10 @@
 {
-  "name": "application-name",
+  "name": "FileCoves",
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "NODE_ENV=test nodemon ./node_modules/.bin/mocha --reporter spec --timeout 10000 test/test_routes.js"
   },
   "dependencies": {
     "express": "3.4.8",
@@ -14,5 +15,12 @@
     "fbgraph": "~0.2.9",
     "logfmt": "~1.1.2",
     "mongoose": "~3.8.8"
+  },
+  "devDependencies": {
+    "supertest": "latest",
+    "should": "latest",
+    "mocha": "latest",
+    "nodemon": "latest"
   }
 }
+

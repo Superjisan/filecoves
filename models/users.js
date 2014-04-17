@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/chickendog');
+mongoose.connect('mongodb://localhost/filecoves');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
