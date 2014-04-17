@@ -85,7 +85,7 @@ exports.upload = function(req, res){
 		});
 	});
 
-res.redirect('/');
+res.redirect('/profile');
 };
 
 exports.search = function(req, res) {

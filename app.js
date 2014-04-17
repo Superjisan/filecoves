@@ -39,6 +39,8 @@ app.engine('html', swig.renderFile);
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
+swig.setDefaults({ cache: false });
+app.set('view cache', false);
 app.use(express.bodyParser({uploadDir:path.join(__dirname, 'uploads')}));
 app.use(express.favicon());
 app.use(express.logger('dev'));
@@ -62,6 +64,7 @@ app.get('/users', user.list);
 app.get('/profile', routes.profile)
 app.post('/upload', routes.upload);
 app.post('/search', routes.search);
+
 
 // facebook authentication
 var FACEBOOK_APP_ID = "249678341873679";
