@@ -20,4 +20,23 @@ describe('Routes Tests', function(){
       .end(done)
     }
   )})
+
+  describe('GET /', function(){
+    it ('should render index.html file', function(done) {
+      agent
+      .get('/')
+      .expect('Content-Type', /html/)
+      .expect(200)
+      .end(done)
+    }
+  )})
+  describe('GET /logout', function(){
+    it ('should render index.html file', function(done) {
+      agent
+      .get('/logout')
+      .expect('Content-Type', "text/plain; charset=UTF-8")
+      .expect(302)
+      .end(done)
+    }
+  )})
 })
