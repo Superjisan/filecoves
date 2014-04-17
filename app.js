@@ -59,6 +59,7 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/users', user.list);
+app.get('/profile', routes.profile)
 app.post('/upload', routes.upload);
 app.post('/search', routes.search);
 
@@ -88,7 +89,7 @@ passport.use(new FacebookStrategy({
 app.get('/auth/facebook',
 	passport.authenticate('facebook'));
 app.get('/auth/facebook/callback',
-	passport.authenticate('facebook', { successRedirect: '/',
+	passport.authenticate('facebook', { successRedirect: '/profile',
 	failureRedirect: '/' }));
 
 app.get('/logout', function(req, res){

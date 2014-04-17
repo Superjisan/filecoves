@@ -96,3 +96,7 @@ exports.search = function(req, res) {
 			console.log(results);
 	});
 };
+
+exports.profile = function(req, res) {
+	res.render('profile')
+}
