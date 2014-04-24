@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app.js",
-    "test": "NODE_ENV=test nodemon ./node_modules/.bin/mocha --reporter spec --timeout 10000 test/test_routes.js"
+    "start": "NODE_ENV=development ./node_modules/.bin/nodemon app.js",
+    "test": "NODE_ENV=test nodemon ./node_modules/.bin/mocha --reporter spec --timeout 10000 test/*.test.js"
   },
   "dependencies": {
     "express": "3.4.8",
