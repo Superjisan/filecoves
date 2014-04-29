@@ -14,7 +14,13 @@
     "passport": "~0.2.0",
     "fbgraph": "~0.2.9",
     "logfmt": "~1.1.2",
-    "mongoose": "~3.8.8"
+    "mongoose": "~3.8.8",
+    "connect-mongo": "~0.4.0",
+    "consolidate": "~0.10.0",
+    "passport-local": "~1.0.0",
+    "connect-flash": "~0.1.1",
+    "view-helpers": "~0.1.4",
+    "lodash": "~2.4.1"
   },
   "devDependencies": {
     "supertest": "latest",
@@ -23,4 +29,3 @@
     "nodemon": "latest"
   }
 }
-

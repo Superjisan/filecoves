@@ -1,19 +1,9 @@
-var path = require('path')
-  , rootPath = path.normalize(__dirname + '/..')
+// Utilize Lo-Dash utility library
+var _ = require('lodash');
 
-
-  development: {
-    db: 'mongodb://localhost/filecoves',
-    root: rootPath,
-    app: {
-      name: 'FileCoves'
-    },
-  },
-  test: {
-    db: 'mongodb://localhost/filecoves_test',
-    root: rootPath,
-    app: {
-      name: 'FileCoves Test'
-    }
-  }
-}
+// Extend the base configuration in all.js with environment
+// specific configuration
+module.exports = _.extend(
+    require(__dirname + '/../config/env/all.js'),
+    require(__dirname + '/../config/env/' + process.env.NODE_ENV + '.js') || {}
+);

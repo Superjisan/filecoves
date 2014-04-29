@@ -1,22 +1,26 @@
-
 /**
  * Module dependencies.
  */
-var fs = require('fs');
-var express = require('express');
-var routes = require('./routes');
-var user = require('./routes/user');
-var http = require('http');
-var path = require('path');
-var swig = require('swig');
-var passport = require('passport'),
-FacebookStrategy = require('passport-facebook').Strategy;
+var express = require('express'),
+    fs = require('fs'),
+    passport = require('passport'),
+    http = require('http');
+/**
+ * Main application entry file.
+ * Please note that the order of loading is important.
+ */
 
 // Load configurations
-// Set the node environment variable if not set before
+// Set the node enviornment variable if not set before
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-var app = express();
+// Initializing system variables
+var config = require('./config/config'),
+    mongoose = require('mongoose');
+
+// Bootstrap db connection
+var db = mongoose.connect(config.db);
+
 // Bootstrap models
 var models_path = __dirname + '/models';
 var walk = function(path) {
@@ -33,61 +37,57 @@ var walk = function(path) {
     });
 };
 walk(models_path);
-app.engine('html', swig.renderFile);
 
-// all environments
-app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'html');
-swig.setDefaults({ cache: false });
-app.set('view cache', false);
-app.use(express.bodyParser({uploadDir:path.join(__dirname, 'uploads')}));
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.methodOverride());
-app.use(express.cookieParser());
-app.use(express.session({ secret: 'keyboard cat' }));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
+// Bootstrap passport config
+require('./config/passport')(passport);
 
-// development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
-}
+var app = express();
+
+// Express settings
+require('./config/express')(app, passport, db);
+
+// Bootstrap routes
+// var routes_path = __dirname + '/routes';
+// var walk = function(path) {
+//     fs.readdirSync(path).forEach(function(file) {
+//         var newPath = path + '/' + file;
+//         var stat = fs.statSync(newPath);
+//         if (stat.isFile()) {
+//             if (/(.*)\.(js$|coffee$)/.test(file)) {
+//                 require(newPath)(app, passport);
+//             }
+//         // We skip the app/routes/middlewares directory as it is meant to be
+//         // used and shared by routes as further middlewares and is not a
+//         // route by itself
+//         } else if (stat.isDirectory() && file !== 'middlewares') {
+//             walk(newPath);
+//         }
+//     });
+// };
+// walk(routes_path);
+
+
+// Start the app by listening on <port>
+var port = process.env.PORT || config.port;
+app.listen(port);
+console.log('Express app started on port ' + port);
+
+
+
+// Expose app
+exports = module.exports = app;
+
+/////////////////////////////////////////////////////////
+var routes = require('./routes/index')
 
 app.get('/', routes.index);
-app.get('/users', user.list);
+// app.get('/users', user.list);
 app.get('/profile', routes.profile)
 app.post('/upload', routes.upload);
 app.post('/search', routes.search);
 
 
-// facebook authentication
-var FACEBOOK_APP_ID = "249678341873679";
-var FACEBOOK_APP_SECRET = "3689affe76888332a37ee31e8d7e8ffa";
 
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
-});
-
-passport.use(new FacebookStrategy({
-	clientID: FACEBOOK_APP_ID,
-	clientSecret: FACEBOOK_APP_SECRET,
-	callbackURL: "http://localhost:3000/auth/facebook/callback"
-	},
-	function(accessToken, refreshToken, profile, done) {
-		process.nextTick(function () {
-			// console.log(profile);
-		done(null, profile);
-	});
-}));
 
 app.get('/auth/facebook',
 	passport.authenticate('facebook'));
