@@ -86,9 +86,6 @@ app.get('/profile', routes.profile)
 app.post('/upload', routes.upload);
 app.post('/search', routes.search);
 
-
-
-
 app.get('/auth/facebook',
 	passport.authenticate('facebook'));
 app.get('/auth/facebook/callback',
