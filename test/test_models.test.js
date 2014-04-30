@@ -12,8 +12,9 @@ describe('User', function () {
   /**
    * Your model should have two fields (both required) of title and body
    */
-  it('should have a title and body field of String', function (done) {
-    var article = new Article({title: "My Article", body: "Isn't this interesting?"});
+  it('should have a name, e-mail, dropbox_id, filter_caterogy, generated urls, file_history, roles', function (done) {
+    var filter_category = {filter_options: [], select_value: '', input_values: '' }
+    var user = new User({name: "Lamarcus Aldridge", dropbox_id: "48", roles: ['client']);
     article.save(function(err) {
       article.title.should.equal("My Article");
       done(err);

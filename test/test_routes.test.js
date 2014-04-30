@@ -10,6 +10,9 @@ var mongoose = require('mongoose')
 
 describe('Routes Tests', function(){
 
+   before(function (done) {
+    require('./helper').clearDb(done)
+  })
 
   describe('GET /profile', function(){
     it ('should render profile.html file', function(done) {

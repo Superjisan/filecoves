@@ -22,7 +22,7 @@ var FilesSchema = new Schema({
 })
 
 var UsersSchema = new Schema({
-  name : String,
+  name : {type: String, required: true},
   dropbox : {},
   dropbox_id : String,
   dropbox_accesstoken : String,
