@@ -1,8 +1,4 @@
 var mongoose = require('mongoose');
-// mongoose.connect('mongodb://localhost/filecoves');
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-
 var Schema = mongoose.Schema;
 
 var FiltersSchema = new Schema ({
@@ -37,4 +33,6 @@ var UsersSchema = new Schema({
   roles : []
 })
 
-mongoose.model('User', UsersSchema)
+var User = mongoose.model('User', UsersSchema)
+
+module.exports = {"User": User}
