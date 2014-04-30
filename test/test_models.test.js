@@ -14,7 +14,7 @@ describe('User', function () {
    */
   it('should have a name, e-mail, dropbox_id, filter_caterogy, generated urls, file_history, roles', function (done) {
     var filter_category = {filter_options: [], select_value: '', input_values: '' }
-    var user = new User({name: "Lamarcus Aldridge", dropbox_id: "48", roles: ['client']);
+    var user = new User({name: "Lamarcus Aldridge", dropbox_id: "48", roles: ['client']});
     article.save(function(err) {
       article.title.should.equal("My Article");
       done(err);
