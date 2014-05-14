@@ -28,7 +28,7 @@ var UsersSchema = new Schema({
   dropbox_accesstoken : String,
   filter_categories : [FiltersSchema],
   urls_generated : [urlsSchema],
-  email : String,
+  email : {type:String, required: true},
   file_history : [FilesSchema],
   roles : []
 })
