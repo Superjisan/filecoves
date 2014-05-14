@@ -7,27 +7,32 @@ var mongoose = require('mongoose'),
     User = mongoose.model('User');
 
 
-describe('User', function () {
+describe('User Model Tests', function () {
 
+  describe('User Model properties', function(){
   /**
    * Your model should have two fields (both required) of title and body
    */
-  it('should have a name, e-mail, dropbox_id, filter_caterogy, generated urls, file_history, roles', function (done) {
+  it('should have a name, e-mail, dropbox_id, roles', function (done) {
     var filter_category = {filter_options: [], select_value: '', input_values: '' }
-    var user = new User({name: "Lamarcus Aldridge", dropbox_id: "48", roles: ['client']});
-    article.save(function(err) {
-      article.title.should.equal("My Article");
+    var user = new User({name: "Lamarcus Aldridge", email: "la@ripcity.com" , dropbox_id: "48", roles: ['client']});
+    user.save(function(err) {
+      user.name.should.equal("Lamarcus Aldridge");
+      user.email.should.equal("la@ripcity.com");
+      user.dropbox_id.should.equal("48");
+      user.roles[0].should.equal('client')
       done(err);
+      });
+    });
+  })
+
+  it('should require name and email', function (done) {
+    var user = new User({name: "Kevin Durant"});
+    user.save(function(err) {
+      err.message.should.equal("Validation failed");
+      done();
     });
   });
-
-  // it('should require title and body', function (done) {
-  //   var user = new User({title: "My Second Article"});
-  //   user.save(function(err) {
-  //     err.message.should.equal("Validation failed");
-  //     done();
-  //   });
-  // });
 
 
   // /**

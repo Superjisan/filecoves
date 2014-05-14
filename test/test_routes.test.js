@@ -23,7 +23,7 @@ describe('Routes Tests', function(){
       .end(done)
     }
   )})
-
+  // a little bit slow for some reason
   describe('GET /', function(){
     it ('should render index.html file', function(done) {
       agent
