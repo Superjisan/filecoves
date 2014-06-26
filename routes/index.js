@@ -42,7 +42,8 @@ exports.upload = function(req, res){
 	if (typeof req.files.file.path !== 'undefined') {
 		var fileArray = [req.files.file];
 	} else {
-		var fileArray = req.files.file;
+		console.log("req.files:",req.files)
+		// var fileArray = req.files.file;
 	}
 
 	var location = req.body.location;
